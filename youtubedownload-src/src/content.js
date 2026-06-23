@@ -3,8 +3,60 @@
 
   const INJECTED_BTN_CLASS = "ytd-downloader-injected-btn";
   const FLOAT_BTN_CLASS = "ytd-downloader-float-btn";
+  const CONTROL_BTN_CLASS = "ytd-downloader-control-btn";
   const OVERLAY_CLASS = "ytd-dl-overlay";
 
+  // Check if we are on the Downloader Webpage
+  const isDownloaderPage = (
+    location.pathname.includes("/youtubedownload/") || 
+    location.hostname === "jxsite.github.io" ||
+    document.title.includes("Free YouTube Video Downloader")
+  );
+
+  if (isDownloaderPage) {
+    console.log("[YT Downloader] Webpage communication bridge initialized.");
+    
+    // Respond to status pings from webpage
+    window.addEventListener("yt-extension-ping", () => {
+      console.log("[YT Downloader Bridge] Ping received from webpage.");
+      window.dispatchEvent(new CustomEvent("yt-extension-pong", { detail: { active: true } }));
+    });
+
+    // Respond to search/channel queries from webpage
+    window.addEventListener("yt-batch-query", async (event) => {
+      const { type, query } = event.detail || {};
+      console.log("[YT Downloader Bridge] Query request received:", { type, query });
+      
+      const messageType = type === "channel" ? "batch-channel" : "batch-search";
+      const payload = type === "channel" ? { channel: query } : { query: query };
+      
+      try {
+        const response = await chrome.runtime.sendMessage({
+          type: messageType,
+          ...payload
+        });
+        
+        console.log("[YT Downloader Bridge] Received response from background:", response);
+        window.dispatchEvent(new CustomEvent("yt-batch-results", {
+          detail: response
+        }));
+      } catch (err) {
+        console.error("[YT Downloader Bridge] Communication error:", err);
+        window.dispatchEvent(new CustomEvent("yt-batch-results", {
+          detail: { ok: false, error: "Chrome extension background script is not responding. Please reload the page." }
+        }));
+      }
+    });
+    
+    // Dispatch a pong event immediately in case the page already loaded and pinged
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("yt-extension-pong", { detail: { active: true } }));
+    }, 1000);
+    
+    return; // Don't run YouTube-specific player logic on the webpage!
+  }
+
+  // --- YouTube Video page logic starts here ---
   let currentVideoId = "";
   let currentTitle = "";
   let currentFormats = [];
@@ -47,7 +99,7 @@
     subtree: true
   });
 
-  // Also hook history state push to detect SPA navigations
+  // Hook history state push to detect SPA navigations
   let lastUrl = location.href;
   setInterval(() => {
     if (location.href !== lastUrl) {
@@ -100,19 +152,17 @@
       return;
     }
 
-    // 1. Injected Button in YouTube Action Bar
+    // 1. Injected Button in YouTube Action Bar below the player
     const actionContainers = [
       "ytd-watch-metadata #top-level-buttons-computed",
       "#top-level-buttons-computed",
       "#actions-inner #top-level-buttons-computed"
     ];
 
-    let injected = false;
     for (const selector of actionContainers) {
       const container = document.querySelector(selector);
       if (container) {
         if (container.querySelector(`.${INJECTED_BTN_CLASS}`)) {
-          injected = true;
           break;
         }
 
@@ -141,13 +191,37 @@
         } else {
           container.appendChild(downloadBtn);
         }
-        injected = true;
         console.log("[YT Downloader] Injected Download button below player.");
         break;
       }
     }
 
-    // 2. Floating Action Button as standard fallback
+    // 2. Injected Button inside the Player Control Bar (bottom-right Controls)
+    const playerControls = document.querySelector(".ytp-right-controls");
+    if (playerControls) {
+      if (!playerControls.querySelector(`.${CONTROL_BTN_CLASS}`)) {
+        const ctrlBtn = document.createElement("button");
+        ctrlBtn.type = "button";
+        ctrlBtn.className = `ytp-button ${CONTROL_BTN_CLASS}`;
+        ctrlBtn.title = "Download Video/Audio/Subtitles";
+        ctrlBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 18V19H6V18H17ZM16.5 11.4L15.8 10.7L12.5 14V5H11.5V14L8.2 10.7L7.5 11.4L12 15.9L16.5 11.4Z"/>
+          </svg>
+        `;
+        ctrlBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openDownloadModal();
+        });
+        
+        // Prepend it inside controls
+        playerControls.insertBefore(ctrlBtn, playerControls.firstChild);
+        console.log("[YT Downloader] Injected Download button into player control bar.");
+      }
+    }
+
+    // 3. Floating Action Button as standard fallback
     let floatBtn = document.querySelector(`.${FLOAT_BTN_CLASS}`);
     if (!floatBtn) {
       floatBtn = document.createElement("button");
@@ -177,7 +251,6 @@
 
   // Open Downloader Modal
   function openDownloadModal() {
-    // If we have no details, request a quick scan
     if (!currentVideoId) {
       requestDataScan();
     }
@@ -225,7 +298,6 @@
 
     document.body.appendChild(overlay);
 
-    // Setup modal actions
     const closeBtn = overlay.querySelector(".ytd-dl-close");
     const closeModal = () => {
       overlay.classList.add("hide");
@@ -236,7 +308,6 @@
       if (e.target === overlay) closeModal();
     });
 
-    // Setup tab clicks
     const tabBtns = overlay.querySelectorAll(".ytd-dl-tab-btn");
     const tabContents = overlay.querySelectorAll(".ytd-dl-tab-content");
     tabBtns.forEach(btn => {
@@ -250,7 +321,6 @@
       });
     });
 
-    // Render contents
     renderModalData(overlay);
   }
 
@@ -304,7 +374,6 @@
     if (videoOnlyFormats.length === 0) {
       listHd.innerHTML = `<div style="text-align:center;color:#9ca3af;padding:20px;">No HD formats found.</div>`;
     } else {
-      // Sort descending quality
       videoOnlyFormats.sort((a, b) => {
         const qa = parseInt(a.qualityLabel) || 0;
         const qb = parseInt(b.qualityLabel) || 0;
@@ -449,7 +518,6 @@
   }
 
   async function triggerDirectDownload(url, filename) {
-    console.log("[YT Downloader] Triggering download:", { url, filename });
     try {
       const response = await chrome.runtime.sendMessage({
         type: "download-media",
@@ -460,10 +528,8 @@
       if (response?.ok) {
         return true;
       }
-      console.warn("[YT Downloader] Download failed:", response?.error);
       alert("Download failed: " + (response?.error || "Unknown error"));
     } catch (err) {
-      console.error("[YT Downloader] Extension runtime disconnected:", err);
       alert("Extension connection error. Please refresh YouTube and try again.");
     }
     return false;
@@ -588,7 +654,6 @@
     autoDownloadStarted = true;
     console.log("[YT Downloader] Auto download hash detected!");
 
-    // Inject loading overlay immediately
     const overlay = document.createElement("div");
     overlay.style.position = "fixed";
     overlay.style.top = "0";
@@ -617,13 +682,11 @@
     const interval = setInterval(async () => {
       attempts++;
       
-      // Request re-scan just in case
       requestDataScan();
 
       if (currentFormats && currentFormats.length > 0) {
         clearInterval(interval);
         
-        // Select best muxed format (highest resolution, usually 720p or 360p)
         const sortedFormats = [...currentFormats].sort((a, b) => {
           const w1 = a.width || 0;
           const w2 = b.width || 0;
@@ -636,7 +699,6 @@
         
         if (url) {
           overlay.querySelector("#auto-dl-status").textContent = `Downloading ${quality} video...`;
-          
           const filename = buildFilename(currentTitle, quality, bestMuxed.mimeType);
           const success = await triggerDirectDownload(url, filename);
           

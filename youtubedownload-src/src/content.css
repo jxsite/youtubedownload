@@ -58,6 +58,32 @@
   fill: currentColor;
 }
 
+/* Injected Button inside YouTube player controls bar */
+.ytd-downloader-control-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  cursor: pointer !important;
+  background: none !important;
+  border: none !important;
+  vertical-align: middle !important;
+  padding: 0 !important;
+}
+
+.ytd-downloader-control-btn:hover {
+  opacity: 1 !important;
+}
+
+.ytd-downloader-control-btn svg {
+  width: 22px !important;
+  height: 22px !important;
+  fill: #ffffff !important;
+}
+
 /* Overlay Modal Container */
 .ytd-dl-overlay {
   position: fixed;

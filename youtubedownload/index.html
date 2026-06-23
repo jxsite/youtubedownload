@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free YouTube Video Downloader - Download Video, Audio & Transcripts</title>
-  <meta name="description" content="Free helper for downloading YouTube videos, audio tracks, and subtitle transcripts. Extract various resolutions and formats directly.">
+  <meta name="description" content="Free helper for downloading YouTube videos, audio tracks, and subtitle transcripts. Extract various resolutions and formats directly or list channel videos and search results.">
   <link rel="stylesheet" href="style.css">
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,19 +38,61 @@
         <h1 class="hero-title">Download YouTube Media <span class="gradient-text">Instantly</span></h1>
         <p class="hero-subtitle">Save high-quality MP4 videos, MP3/M4A audio, and subtitle transcripts directly from your browser. No registration, no ads.</p>
         
-        <!-- Downloader Input Box -->
+        <!-- Tab Navigation -->
+        <div class="downloader-tabs">
+          <button class="tab-trigger active" data-target="single-mode">?? Single Video</button>
+          <button class="tab-trigger" data-target="batch-mode">?? Batch Extractor</button>
+        </div>
+
+        <!-- Downloader Card -->
         <div class="downloader-card">
-          <form id="download-form" class="downloader-form">
-            <div class="input-wrapper">
-              <span class="input-icon">??</span>
-              <input type="url" id="tweet-url" placeholder="Paste YouTube video link here..." required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-download">
-              <span class="btn-text">Extract Media</span>
-              <span class="loader"></span>
-            </button>
-          </form>
-          <p class="downloader-tip">Example: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> or <code>https://youtu.be/dQw4w9WgXcQ</code></p>
+          <!-- Extension Connection Status -->
+          <div id="connection-status" class="status-indicator inactive">
+            <span class="status-dot"></span>
+            <span class="status-text">Extension not detected. Install to enable download options.</span>
+          </div>
+
+          <!-- Single Video Form -->
+          <div id="single-mode" class="tab-pane active">
+            <form id="download-form" class="downloader-form">
+              <div class="input-wrapper">
+                <span class="input-icon">??</span>
+                <input type="url" id="tweet-url" placeholder="Paste YouTube video link here..." required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-download">
+                <span class="btn-text">Extract Media</span>
+                <span class="loader"></span>
+              </button>
+            </form>
+            <p class="downloader-tip">Example: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code></p>
+          </div>
+
+          <!-- Batch Extractor Form -->
+          <div id="batch-mode" class="tab-pane">
+            <form id="batch-form" class="downloader-form">
+              <div class="input-wrapper select-inside">
+                <span class="input-icon">??</span>
+                <input type="text" id="batch-query" placeholder="Type search keywords or channel name..." required>
+                <select id="batch-type" class="batch-select">
+                  <option value="search">Search Keywords</option>
+                  <option value="channel">Channel Name/ID</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-download" id="btn-batch-submit">
+                <span class="btn-text">Extract Videos</span>
+                <span class="loader"></span>
+              </button>
+            </form>
+            <p class="downloader-tip">For Channels, use username (e.g., <code>@google</code>) or Channel ID (e.g., <code>UC0...</code>).</p>
+          </div>
+        </div>
+
+        <!-- Batch Results Grid -->
+        <div id="batch-results-container" class="batch-results-container hide">
+          <h2 class="section-title text-left">Extracted Videos (<span id="results-count">0</span>)</h2>
+          <div id="batch-results" class="batch-results-grid">
+            <!-- Video Cards injected here dynamically -->
+          </div>
         </div>
 
         <div class="hero-actions">
@@ -105,8 +147,8 @@
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
-          <h3>Browse YouTube</h3>
-          <p>Open any video. A floating "Download" button will appear, or you can paste links here.</p>
+          <h3>Browse or Search</h3>
+          <p>Open any video, search keywords, or query channels using our batch extractor tool.</p>
         </div>
         <div class="step-card">
           <div class="step-num">3</div>

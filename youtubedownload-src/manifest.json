@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Free YouTube Downloader & Subtitle Saver",
   "short_name": "YT Downloader",
-  "version": "0.1.0",
-  "description": "Extract and download YouTube videos, audios, and subtitle transcripts in multiple resolutions/languages.",
+  "version": "0.2.0",
+  "description": "Extract and download YouTube videos, audios, and subtitle transcripts in multiple resolutions/languages, with player integration and batch search/channel extract support.",
   "icons": {
     "16": "assets/icon-16.png",
     "32": "assets/icon-32.png",
@@ -27,7 +27,11 @@
     {
       "matches": [
         "https://www.youtube.com/*",
-        "https://youtube.com/*"
+        "https://youtube.com/*",
+        "https://jxsite.github.io/youtubedownload/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*",
+        "file:///*"
       ],
       "js": [
         "src/content.js"
