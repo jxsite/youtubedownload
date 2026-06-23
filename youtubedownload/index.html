@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free YouTube Video Downloader - Download Video, Audio & Transcripts</title>
+  <meta name="description" content="Free helper for downloading YouTube videos, audio tracks, and subtitle transcripts. Extract various resolutions and formats directly.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon-wrapper">
+          <span class="logo-play-icon">?</span>
+        </div>
+        <span class="logo-text">Free YouTube Downloader</span>
+      </div>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://chrome.google.com/webstore" target="_blank" class="btn btn-secondary nav-btn">Extension Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="badge">100% Free & Secure Chrome Extension</span>
+        <h1 class="hero-title">Download YouTube Media <span class="gradient-text">Instantly</span></h1>
+        <p class="hero-subtitle">Save high-quality MP4 videos, MP3/M4A audio, and subtitle transcripts directly from your browser. No registration, no ads.</p>
+        
+        <!-- Downloader Input Box -->
+        <div class="downloader-card">
+          <form id="download-form" class="downloader-form">
+            <div class="input-wrapper">
+              <span class="input-icon">??</span>
+              <input type="url" id="tweet-url" placeholder="Paste YouTube video link here..." required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-download">
+              <span class="btn-text">Extract Media</span>
+              <span class="loader"></span>
+            </button>
+          </form>
+          <p class="downloader-tip">Example: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> or <code>https://youtu.be/dQw4w9WgXcQ</code></p>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://chrome.google.com/webstore" target="_blank" class="btn btn-primary btn-large">
+            <span class="chrome-icon">??</span> Add to Chrome (Free)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Free YouTube Downloader?</h2>
+      <p class="section-subtitle">A minimal, clean, and high-performance browser extension tailored for your needs.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">???</div>
+          <h3>Various Resolutions</h3>
+          <p>Download video in different formats and resolutions: 1080p, 720p, 480p, 360p, and more.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">??</div>
+          <h3>Audio Extraction</h3>
+          <p>Extract and download high-quality audio files (M4A or WebM) for offline music listening.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">??</div>
+          <h3>Text & Subtitles</h3>
+          <p>Export transcripts in multiple languages as readable Text (.txt) or Subtitles (.srt/.vtt) instantly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">??</div>
+          <h3>100% Private</h3>
+          <p>Operates entirely in-browser. We never collect tracking logs, account cookies, or download histories.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Install the Extension</h3>
+          <p>Add the extension to your Google Chrome browser from the Web Store in just one click.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Browse YouTube</h3>
+          <p>Open any video. A floating "Download" button will appear, or you can paste links here.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Select & Save</h3>
+          <p>Choose your desired resolution, audio quality, or subtitle language, and download instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-question">How does the YouTube downloader extract resolutions?</h3>
+          <div class="faq-answer">
+            <p>The Chrome extension runs in the page context, safely reading player stream configurations (like adaptive streams for 1080p, 720p, and separate audio tracks) directly from the active YouTube HTML5 player.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">What format do the transcripts come in?</h3>
+          <div class="faq-answer">
+            <p>You can download transcripts as clean paragraph Text (.txt), standard SubRip Subtitles (.srt), or WebVTT (.vtt) files, in any language currently available or auto-generated by the YouTube creator.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Is it completely free?</h3>
+          <div class="faq-answer">
+            <p>Yes, the extension and webpage are 100% free with no ads, no registration, and no tracking script.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Does it support downloading age-restricted videos?</h3>
+          <div class="faq-answer">
+            <p>Because the extension operates under your active browser session context, if you can watch the video in your current tab, the extension can resolve and download its resources.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <p>&copy; 2026 Free YouTube Downloader. Distributed under MIT License.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="https://github.com">GitHub Repository</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

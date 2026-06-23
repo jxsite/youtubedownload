@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free X Video Saver - Download X/Twitter Videos in High Quality</title>
+  <meta name="description" content="Free helper for saving X/Twitter videos you own or have permission to download. One-click direct downloads in high definition.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">
+        <img src="../assets/icon-48.png" alt="Free X Video Saver Logo" class="logo-img">
+        <span class="logo-text">Free X Video Saver</span>
+      </div>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://chrome.google.com/webstore" target="_blank" class="btn btn-secondary nav-btn">Extension Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="badge">100% Free & Secure Chrome Extension</span>
+        <h1 class="hero-title">Download X/Twitter Videos <span class="gradient-text">Instantly</span></h1>
+        <p class="hero-subtitle">Save high-quality MP4 videos directly from your browser. No registration, no ads, and complete privacy.</p>
+        
+        <!-- Downloader Input Box -->
+        <div class="downloader-card">
+          <form id="download-form" class="downloader-form">
+            <div class="input-wrapper">
+              <span class="input-icon">🔗</span>
+              <input type="url" id="tweet-url" placeholder="Paste X/Twitter status link here..." required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-download">
+              <span class="btn-text">Download Video</span>
+              <span class="loader"></span>
+            </button>
+          </form>
+          <p class="downloader-tip">Example: <code>https://x.com/username/status/1804567890123456789</code></p>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://chrome.google.com/webstore" target="_blank" class="btn btn-primary btn-large">
+            <span class="chrome-icon">🌐</span> Add to Chrome (Free)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Free X Video Saver?</h2>
+      <p class="section-subtitle">A minimal, clean, and high-performance browser extension tailored for your needs.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>One-Click Download</h3>
+          <p>Adds a download button directly beneath videos on X.com. Just click and save.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💎</div>
+          <h3>Highest Quality</h3>
+          <p>Extracts all available video resolutions (up to 1080p Full HD) and downloads the best quality.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Privacy Protected</h3>
+          <p>Operates entirely within your browser. We never collect account details, cookies, or tracking logs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Manifest V3 Ready</h3>
+          <p>Built using Chrome's latest Extension API standard, ensuring maximum security and long-term support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Install the Extension</h3>
+          <p>Add the extension to your Google Chrome browser from the Web Store in just one click.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Browse X/Twitter</h3>
+          <p>Open any post containing a video. A "Free download" button will appear inside the video player.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Download & Save</h3>
+          <p>Click the button, and the extension will immediately resolve the video and download the MP4 file.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-question">Why does the extension need a separate script?</h3>
+          <div class="faq-answer">
+            <p>X.com serves videos using streamed chunks (blob URLs) rather than direct MP4 files. The extension intercepts the network requests and React properties in the page context to retrieve the official MP4 source links from Twitter's CDN safely.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Is it completely free?</h3>
+          <div class="faq-answer">
+            <p>Yes, Free X Video Saver is 100% free, has no hidden costs, and does not display any advertisements.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Does it support downloading GIFs?</h3>
+          <div class="faq-answer">
+            <p>Yes. Twitter converts GIFs into loopable MP4 files. The extension fully supports downloading these MP4 files directly to your device.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Do you store any history of downloaded videos?</h3>
+          <div class="faq-answer">
+            <p>No. The extension runs entirely client-side. We do not run any servers, and we have no access to your browsing history or downloaded files.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <p>&copy; 2026 Free X Video Saver. Distributed under MIT License.</p>
+      <div class="footer-links">
+        <a href="../PRIVACY.md">Privacy Policy</a>
+        <a href="https://github.com">GitHub Repository</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

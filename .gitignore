@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.gemini/
+.agents/
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+*.zip

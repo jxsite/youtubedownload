@@ -1,0 +1,9 @@
+dist/
+x-video-saver.zip
+.gemini/
+.agents/
+.idea/
+.vscode/
+node_modules/
+Thumbs.db
+desktop.ini
