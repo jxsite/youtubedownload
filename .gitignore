@@ -7,3 +7,9 @@ node_modules/
 Thumbs.db
 desktop.ini
 *.zip
+
+# Ignore extension and archive directories
+xdownload/
+xdownload-src/
+youtubedownload/
+youtubedownload-src/
